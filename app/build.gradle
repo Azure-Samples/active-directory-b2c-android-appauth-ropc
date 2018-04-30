@@ -1,0 +1,56 @@
+apply plugin: 'com.android.application'
+apply plugin: 'checkstyle'
+apply from: '../config/android-common.gradle'
+apply from: '../config/keystore.gradle'
+
+android {
+    defaultConfig {
+        applicationId 'net.openid.appauthdemo'
+        project.archivesBaseName = 'appauth-demoapp'
+        vectorDrawables.useSupportLibrary = true
+
+        // Make sure this is consistent with the redirect URI used in res/raw/auth_config.json,
+        // or specify additional redirect URIs in AndroidManifest.xml
+        manifestPlaceholders = [
+                'appAuthRedirectScheme': 'MSALb35a3d9b'
+        ]
+    }
+
+    signingConfigs {
+        debugAndRelease {
+            storeFile file("${rootDir}/appauth.keystore")
+            storePassword "appauth"
+            keyAlias "appauth"
+            keyPassword "appauth"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debugAndRelease
+        }
+        release {
+            signingConfig signingConfigs.debugAndRelease
+        }
+    }
+    buildToolsVersion '26.0.2'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':library')
+    implementation "com.android.support:appcompat-v7:${rootProject.supportLibVersion}"
+    implementation "com.android.support:design:${rootProject.supportLibVersion}"
+    implementation 'com.github.bumptech.glide:glide:4.0.0'
+    implementation 'com.squareup.okio:okio:1.13.0'
+    implementation 'joda-time:joda-time:2.9.9'
+
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
+}
+
+apply from: '../config/style.gradle'

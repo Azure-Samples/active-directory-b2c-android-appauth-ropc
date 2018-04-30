@@ -1,0 +1,11 @@
+{
+  "client_id": "b35a3d9b-cf71-45ab-bbc7-8a239b9c181b",
+  "redirect_uri": "MSALb35a3d9b://Redirect/path",
+  "authorization_scope": "openid https://tenantName.onmicrosoft.com/APIname/scope",
+  "discovery_uri": "https://login.microsoftonline.com/tfp/tenantName.onmicrosoft.com/B2C_1_ResourceOwner/.well-known/openid-configuration",
+  "authorization_endpoint_uri": "",
+  "token_endpoint_uri": "",
+  "registration_endpoint_uri": "",
+  "user_info_endpoint_uri": "",
+  "https_required": true
+}

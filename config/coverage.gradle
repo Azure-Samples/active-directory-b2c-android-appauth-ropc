@@ -1,0 +1,30 @@
+apply plugin: 'jacoco'
+jacoco {
+    toolVersion = "0.7.9"
+}
+
+android {
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    // Class R is used, but usage will not be covered, so ignore this class from report
+    classDirectories = fileTree(
+            dir: 'build/intermediates/classes/debug',
+            excludes: ['**/BuildConfig.class']
+    )
+    sourceDirectories = files('java')
+    executionData = files('build/jacoco/testDebugUnitTest.exec')
+}
